@@ -13,7 +13,6 @@ export default function Hero3D() {
         />
       </div>
 
-      {/* gradient overlay to enhance readability without blocking interaction */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
 
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center">
@@ -44,7 +43,7 @@ export default function Hero3D() {
               View Projects
             </a>
             <a
-              href="mailto:you@example.com"
+              href="#contact"
               className="rounded-lg border border-white/20 bg-white/5 px-5 py-3 font-semibold text-white backdrop-blur transition hover:bg-white/10"
             >
               Get in Touch

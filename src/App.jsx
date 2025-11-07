@@ -3,6 +3,7 @@ import Hero3D from './components/Hero3D.jsx';
 import AboutMe from './components/AboutMe.jsx';
 import SkillsShowcase from './components/SkillsShowcase.jsx';
 import ProjectsGallery from './components/ProjectsGallery.jsx';
+import ContactMe from './components/ContactMe.jsx';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <AboutMe />
       <SkillsShowcase />
       <ProjectsGallery />
+      <ContactMe />
       <footer className="py-10 text-center text-sm text-slate-400">
         <p>
           Built with React, Tailwind, and a playful 3D touch. © {new Date().getFullYear()} — Your Name
