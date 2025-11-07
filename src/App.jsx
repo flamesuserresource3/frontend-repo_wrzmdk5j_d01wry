@@ -1,28 +1,21 @@
-import { useState } from 'react'
+import React from 'react';
+import Hero3D from './components/Hero3D.jsx';
+import AboutMe from './components/AboutMe.jsx';
+import SkillsShowcase from './components/SkillsShowcase.jsx';
+import ProjectsGallery from './components/ProjectsGallery.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100">
+      <Hero3D />
+      <AboutMe />
+      <SkillsShowcase />
+      <ProjectsGallery />
+      <footer className="py-10 text-center text-sm text-slate-400">
+        <p>
+          Built with React, Tailwind, and a playful 3D touch. © {new Date().getFullYear()} — Your Name
         </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+      </footer>
     </div>
-  )
+  );
 }
-
-export default App
