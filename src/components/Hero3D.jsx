@@ -1,11 +1,33 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Spline from '@splinetool/react-spline';
 import { Rocket, Github, Linkedin, Mail } from 'lucide-react';
 
 export default function Hero3D() {
+  const ref = useRef(null);
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const smx = useSpring(mx, { stiffness: 80, damping: 20, mass: 0.4 });
+  const smy = useSpring(my, { stiffness: 80, damping: 20, mass: 0.4 });
+
+  const orb1X = useTransform(smx, [0, 1], [20, -20]);
+  const orb1Y = useTransform(smy, [0, 1], [10, -10]);
+  const orb2X = useTransform(smx, [0, 1], [-30, 30]);
+  const orb2Y = useTransform(smy, [0, 1], [15, -15]);
+  const ringX = useTransform(smx, [0, 1], [-10, 10]);
+  const ringY = useTransform(smy, [0, 1], [8, -8]);
+
+  const onMove = (e) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const nx = (e.clientX - rect.left) / rect.width; // 0..1
+    const ny = (e.clientY - rect.top) / rect.height; // 0..1
+    mx.set(nx);
+    my.set(ny);
+  };
+
   return (
-    <section className="relative h-[90vh] w-full overflow-hidden">
+    <section ref={ref} onMouseMove={onMove} className="relative h-[90vh] w-full overflow-hidden">
       <div className="absolute inset-0">
         <Spline
           scene="https://prod.spline.design/N8g2VNcx8Rycz93J/scene.splinecode"
@@ -13,8 +35,30 @@ export default function Hero3D() {
         />
       </div>
 
+      {/* Non-blocking gradient overlay to keep Spline interactive */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
 
+      {/* 3D-feel floating orbs and rings (non-interactive, parallaxed) */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-10 top-16 h-24 w-24 rounded-full bg-cyan-400/20 blur-xl"
+        style={{ x: orb1X, y: orb1Y }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute bottom-20 right-14 h-28 w-28 rounded-full bg-fuchsia-400/20 blur-xl"
+        style={{ x: orb2X, y: orb2Y }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/3 -translate-x-1/2"
+        style={{ x: ringX, y: ringY }}
+      >
+        <div className="h-40 w-40 rounded-full border border-cyan-300/20" />
+        <div className="-mt-36 ml-10 h-28 w-28 rounded-full border border-fuchsia-300/20" />
+      </motion.div>
+
+      {/* Content */}
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

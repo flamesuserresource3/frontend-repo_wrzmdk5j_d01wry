@@ -52,6 +52,21 @@ const allProjects = [
 
 const categories = ['All', 'Backend', 'Frontend', 'Fullstack'];
 
+function FloatingBadge({ delay = 0 }) {
+  return (
+    <motion.div
+      aria-hidden
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 0.6, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.6 }}
+      className="pointer-events-none absolute -right-3 -top-3 rounded-full bg-gradient-to-r from-teal-400/30 to-fuchsia-400/30 p-2 backdrop-blur"
+    >
+      <div className="h-2 w-2 animate-ping rounded-full bg-teal-300/80" />
+    </motion.div>
+  );
+}
+
 export default function ProjectsGallery() {
   const [active, setActive] = useState('All');
   const [query, setQuery] = useState('');
@@ -100,7 +115,7 @@ export default function ProjectsGallery() {
 
       <AnimatePresence mode="popLayout">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((p) => (
+          {filtered.map((p, idx) => (
             <motion.article
               layout
               key={p.title}
@@ -112,6 +127,7 @@ export default function ProjectsGallery() {
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/60 to-slate-900/60 p-6 backdrop-blur"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_200px_at_10%_-10%,rgba(45,212,191,0.15),transparent),radial-gradient(600px_200px_at_110%_110%,rgba(99,102,241,0.12),transparent)]" />
+              <FloatingBadge delay={idx * 0.05} />
               <div className="relative z-10">
                 <div className="mb-2 flex items-center justify-between">
                   <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-slate-200">{p.category}</span>
